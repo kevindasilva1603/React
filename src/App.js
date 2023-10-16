@@ -1,24 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import "./main.css";
 import "./index.css";
+
 import burgerImage from "./logo.svg";
 import burgerImages from "./images.jpg";
 
 // Composant BurgerBlock
-function BurgerBlock({ imagePath, restaurantName, burgerName, price }) {
+function BurgerBlock({
+    imagePath,
+    restaurantName,
+    burgerName,
+    price,
+    prixPromo,
+}) {
+    const [quantity, setQuantity] = useState(1);
+
+    const incrementQuantity = () => {
+        setQuantity(quantity + 1);
+    };
+
     return (
         <div className='shops--block'>
             <img src={imagePath} alt={restaurantName} />
             <a href='#'>{restaurantName}</a>
             <p className='block__desc'>{burgerName}</p>
-            <p className='block__prix'>{price}</p>
+            <p className='block__prix'>{price} €</p>
+            {prixPromo && (
+                <p className='block__promo-prix'>{prixPromo} € (promo)</p>
+            )}
+
+            <div className='quantity-controls'>
+                <span>{quantity}</span>
+                <button onClick={incrementQuantity}>+</button>
+            </div>
         </div>
     );
 }
 
 // Composant App
 function App() {
+    const addToCart = (burgerName, quantity) => {
+        // Mettez en œuvre ici la logique d'ajout au panier avec la quantité
+        console.log(`Ajout de ${quantity} ${burgerName}(s) au panier.`);
+    };
+
     return (
         <div className='App'>
             {/* Votre contenu HTML */}
@@ -27,25 +53,9 @@ function App() {
                     <div className='header'>
                         <div className='headerlogo'>
                             <img
-                                class='logi'
+                                className='logi'
                                 src={burgerImage}
                                 alt='Image de burger'
-                            />
-                        </div>
-
-                        <div className='header--address'>
-                            <input
-                                type='text'
-                                name=''
-                                id=''
-                                placeholder='*****'
-                            />
-                            <p>to</p>
-                            <input
-                                type='text'
-                                name=''
-                                id=''
-                                placeholder='******'
                             />
                         </div>
 
@@ -74,31 +84,30 @@ function App() {
                     </div>
 
                     <div className='shopsblocks'>
-                        {/* Réutilisation du composant BurgerBlock pour afficher 4 blocs de burgers similaires */}
                         <BurgerBlock
                             imagePath={burgerImages}
                             burgerName='BIG MAC™'
-                            price='11,45 €'
+                            price='11,45'
+                            prixPromo='9,99'
                         />
                         <BurgerBlock
                             imagePath={burgerImages}
                             burgerName='BIG MAC™'
-                            price='11,45 €'
+                            price='11,45'
+                            prixPromo='9,99'
                         />
-                        {
-                            <BurgerBlock
-                                imagePath={burgerImages}
-                                burgerName='BIG MAC™'
-                                price='11,45 €'
-                            />
-                        }
-                        {
-                            <BurgerBlock
-                                imagePath={burgerImages}
-                                burgerName='BIG MAC™'
-                                price='11,45 €'
-                            />
-                        }
+                        <BurgerBlock
+                            imagePath={burgerImages}
+                            burgerName='BIG MAC™'
+                            price='11,45'
+                            prixPromo='9,99'
+                        />
+                        <BurgerBlock
+                            imagePath={burgerImages}
+                            burgerName='BIG MAC™'
+                            price='11,45'
+                            prixPromo='9,99'
+                        />
                     </div>
                 </div>
             </section>
